@@ -8,6 +8,7 @@ deploy:
   password:
     secure: N5W/9IW0v08+1EPyDeMyLvUcs7o/zKXyCxqBtNxuTQWi/rbS9VMuD46JTYjXj9crCXANKatC8uP3cQOT8ag69W3tMjWHjvbnE91b1JwjRjSL0OJ1O2VewNtbD77L9iqnoyAlL99FLJxPh5KPuU4jFlgj498ZSMfmX6rx+4QVsJ2y8RxqLWLHtk5GUosZUNuyaU/i5+YvDy/8dau3NU7oHii24CI1Tmli/W4XH6EYu26NYOG+2cegt2vKft7cTig/HCUAsQPtoqRtinAf2ZWXETiwsmo8yI/25mMTS1domLwkcS6n+4StFISidLQ2pZZHAzkYZ8pA+tyftawDxypwov8j/Iy3R3WsvHU94IK+fUeThUfNxvWzLROHe1S9fhoIeWTrOVX/oZCarZ7ykNixY2UVOrpePdSmOf2p4KgSD6Bly5gg6DMfNlmsJUVPujC8YllQ3/a4ZbV43XNaA0+HGMQiK99c1Cr+3Cef68WYUTBYNixuRejXsc8V/A9t59A2R+ji/uxpq5t/ij5kpxizSNIMhFfJMMfloAnCfEa3cTqLK81YmuxSiDyDOTDxV9jwktJV0AufpgT83H4UbYU6PV2i8l7R8K3f8/gDrKotaLo2jzVsd02iAXdmZMpOyJH/kiSanKPCJ0lvSE3gY77hMPgftVaIO8k5Cl/BHzO8cnU=
   provider: pypi
+  server: https://testpypi.python.org/pypi
   user: tagsarmenian
 env:
 # - TOXENV=py35
