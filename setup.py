@@ -21,7 +21,7 @@ test_requirements = [
 
 setup(
     name='onemillion',
-    version='0.2.0',
+    version='0.3.0',
     description="Determine if a domain is in the Alexa or Cisco top one million domain list.",
     long_description=readme + '\n\n' + history,
     author="Floyd Hightower",
