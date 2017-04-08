@@ -9,6 +9,9 @@ onemillion
 .. image:: https://img.shields.io/travis/fhightower/onemillion.svg
         :target: https://travis-ci.org/fhightower/onemillion
 
+.. image:: https://codecov.io/gh/fhightower/onemillion/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/fhightower/onemillion
+
 .. image:: https://readthedocs.org/projects/onemillion/badge/?version=latest
         :target: https://onemillion.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
