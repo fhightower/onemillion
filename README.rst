@@ -17,6 +17,9 @@ onemillion
      :target: https://pyup.io/repos/github/fhightower/onemillion/
      :alt: Updates
 
+.. image:: https://www.quantifiedcode.com/api/v1/project/901a226d41ef48c08696b0c16583149b/badge.svg
+  :target: https://www.quantifiedcode.com/app/project/901a226d41ef48c08696b0c16583149b
+  :alt: Code issues
 
 Determine if a domain is in the Alexa or Cisco top one million domain list.
 
