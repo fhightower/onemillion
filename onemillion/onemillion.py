@@ -28,6 +28,21 @@ CONFIG = {
 DEFAULT_CACHE_LOCATION = '~/.onemillion'
 
 
+def get_current_etag(domain_list_url):
+    """Get the current etag for a given domain list."""
+    current_etag = None
+
+    try:
+        results = requests.head(domain_list_url)
+    except Exception as e:
+        # TODO: consider adding logging here
+        raise e
+    else:
+        current_etag = results.headers.get('etag')
+
+    return current_etag
+
+
 class OneMillion(object):
     """Find if a given domain is in the top one million domain list."""
 
@@ -68,20 +83,6 @@ class OneMillion(object):
                 metadata = json.load(f)
 
         return metadata
-
-    def _get_current_etag(self, domain_list_url):
-        """Get the current etag for a given domain list."""
-        current_etag = None
-
-        try:
-            results = requests.head(domain_list_url)
-        except Exception as e:
-            # TODO: consider adding logging here
-            raise e
-        else:
-            current_etag = results.headers.get('etag')
-
-        return current_etag
 
     def _update_domain_list(self, domain_list):
         """Update the given domain list."""
@@ -132,7 +133,7 @@ class OneMillion(object):
         # check each of the lists to see if they need to be updated
         for domain_list in CONFIG['domain_lists']:
             previous_etag = self.metadata.get(domain_list['name'] + ' etag')
-            current_etag = self._get_current_etag(domain_list['url'])
+            current_etag = get_current_etag(domain_list['url'])
 
             # if the domain list needs to be updated...
             if previous_etag != current_etag:
