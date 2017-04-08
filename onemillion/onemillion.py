@@ -38,11 +38,15 @@ class OneMillion(object):
         self.update = update
         self.first_time = False
 
+        # if cache location does not exist, create it and metadata file
         if not os.path.exists(self.cache_location):
+            # create the directory in the specified cache_location
             os.makedirs(self.cache_location)
+            # create the metadata.json file
             open(os.path.join(self.cache_location, 'metadata.json'), 'a').close()
             self.first_time = True
 
+        # if instructions given to onemillion are contrary, raise error message
         if self.update and not self.cache:
             raise ValueError("It is not possible to update the top one " +
                              "million domain lists without caching them. " +
@@ -54,16 +58,14 @@ class OneMillion(object):
         """Read the metadata from the metadata file."""
         metadata = None
 
+        # return None if this is the first pass
         if self.first_time:
             self.first_time = False
             return metadata
+        # try to read the metadata
         else:
             with open(os.path.join(self.cache_location, 'metadata.json'), 'r') as f:
-                try:
-                    metadata = json.load(f)
-                # this exception occurs on first pass if no metadata is recorded
-                except ValueError:
-                    pass
+                metadata = json.load(f)
 
         return metadata
 
@@ -89,10 +91,14 @@ class OneMillion(object):
             # TODO: consider adding logging here
             raise e
         else:
+            # read the data from the zip file
             zip_file = zipfile.ZipFile(StringIO.StringIO(response.content))
             data = zip_file.read('top-1m.csv')
 
-            with open(os.path.join(self.cache_location, domain_list['output_file_path']), 'w+') as f:
+            # write the data into the cache_location
+            with open(os.path.join(self.cache_location,
+                                   domain_list['output_file_path']),
+                      'w+') as f:
                 f.write(data)
 
     def _update_etag(self, domain_list_name, etag):
@@ -135,12 +141,8 @@ class OneMillion(object):
                 # update the etag for this list (and the datestamp)
                 self._update_etag(domain_list['name'], current_etag)
                 # TODO: add logging here
-                # print("Updated {} domain list".format(domain_list['name']))
-            # if the domain list has not been updated...
             else:
                 # TODO: add logging here
-                # print("The {} domain list has ".format(domain_list['name']) +
-                      # "not changed since the last run")
                 pass
         else:
             # TODO: add logging here
