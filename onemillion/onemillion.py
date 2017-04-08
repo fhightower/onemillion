@@ -3,6 +3,7 @@
 """Determine if domain is in Alexa or Cisco top one million domain list."""
 
 import csv
+import datetime
 import json
 import os
 import StringIO
@@ -24,7 +25,7 @@ CONFIG = {
         }
     ]
 }
-DEFAULT_CACHE_LOCATION = '~/.one_million'
+DEFAULT_CACHE_LOCATION = '~/.onemillion'
 
 
 class OneMillion(object):
@@ -49,10 +50,6 @@ class OneMillion(object):
                              "of the domain lists by default if cache is " +
                              "set to True.")
 
-    # # TODO: update this function appropriately
-    # def __call__(self, domain):
-    #     self.one_million(domain)
-
     def _get_metadata(self):
         """Read the metadata from the metadata file."""
         metadata = None
@@ -69,21 +66,6 @@ class OneMillion(object):
                     pass
 
         return metadata
-
-    def _get_previous_etag(self, domain_list_name):
-        """Get the previous etag for a given domain list."""
-        previous_etag = None
-        metadata = self._get_metadata()
-
-        if metadata is not None:
-            try:
-                # get the previous etag as stored in the metadata json
-                previous_etag = metadata[domain_list_name + ' etag']
-            # this exception occurs on the first pass after the first domain list has been recorded in metadata.json, but the second one does not exist
-            except KeyError:
-                pass
-
-        return previous_etag
 
     def _get_current_etag(self, domain_list_url):
         """Get the current etag for a given domain list."""
@@ -115,29 +97,42 @@ class OneMillion(object):
 
     def _update_etag(self, domain_list_name, etag):
         """Update the etag for a domain list."""
-        # get the current metadata
-        metadata = self._get_metadata()
-
-        if metadata is None:
-            metadata = dict()
+        if self.metadata is None:
+            self.metadata = dict()
 
         # update the etag
-        metadata[domain_list_name + ' etag'] = etag
+        self.metadata[domain_list_name + ' etag'] = etag
+
+        # update the datestamp
+        self.metadata['last_updated'] = str(datetime.date.today())
 
         # write the updated metadata
         with open(os.path.join(self.cache_location, 'metadata.json'), 'w') as f:
-            f.write(json.dumps(metadata))
+            f.write(json.dumps(self.metadata))
 
     def _update_lists(self):
         """Update the top one million lists."""
+        # get the metadata
+        self.metadata = self._get_metadata()
+        
+        # if the metadata is empty, initialize it
+        if self.metadata is None:
+            self.metadata = dict()
+
+        # if the top domain list was already updated today, skip the update and move on
+        if self.metadata.get('last_updated') == str(datetime.date.today()):
+            return
+
+        # check each of the lists to see if they need to be updated
         for domain_list in CONFIG['domain_lists']:
-            previous_etag = self._get_previous_etag(domain_list['name'])
+            previous_etag = self.metadata.get(domain_list['name'] + ' etag')
             current_etag = self._get_current_etag(domain_list['url'])
 
-            # if the domain list has been updated since the last pass...
+            # if the domain list needs to be updated...
             if previous_etag != current_etag:
                 # update the domain list
                 self._update_domain_list(domain_list)
+                # update the etag for this list (and the datestamp)
                 self._update_etag(domain_list['name'], current_etag)
                 # TODO: add logging here
                 # print("Updated {} domain list".format(domain_list['name']))
@@ -147,6 +142,9 @@ class OneMillion(object):
                 # print("The {} domain list has ".format(domain_list['name']) +
                       # "not changed since the last run")
                 pass
+        else:
+            # TODO: add logging here
+            pass
 
     def domain_in_million(self, domain):
         """Check if the given domain is in a top on million list."""
