@@ -144,9 +144,6 @@ class OneMillion(object):
             else:
                 # TODO: add logging here
                 pass
-        else:
-            # TODO: add logging here
-            pass
 
     def domain_in_million(self, domain):
         """Check if the given domain is in a top on million list."""
