@@ -6,7 +6,10 @@ import csv
 import datetime
 import json
 import os
-import StringIO
+try:
+    from StringIO import StringIO as ZipIO
+except:
+    from io import BytesIO as ZipIO
 import zipfile
 
 import requests
@@ -93,14 +96,14 @@ class OneMillion(object):
             raise e
         else:
             # read the data from the zip file
-            zip_file = zipfile.ZipFile(StringIO.StringIO(response.content))
+            zip_file = zipfile.ZipFile(ZipIO(response.content))
             data = zip_file.read('top-1m.csv')
 
             # write the data into the cache_location
             with open(os.path.join(self.cache_location,
                                    domain_list['output_file_path']),
                       'w+') as f:
-                f.write(data)
+                f.write(data.decode("utf-8"))
 
     def _update_etag(self, domain_list_name, etag):
         """Update the etag for a domain list."""

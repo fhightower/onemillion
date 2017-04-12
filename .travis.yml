@@ -11,9 +11,12 @@ deploy:
   skip_upload_docs: true
   user: cartiergoldfinch
 env:
+- TOXENV=py35
+- TOXENV=py34
+- TOXENV=py33
 - TOXENV=py27
 - TOXENV=py26
 install: pip install -U tox
 language: python
-python: 2.7
+python: 3.5
 script: tox -e ${TOXENV}
