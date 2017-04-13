@@ -77,6 +77,8 @@ If you do not want to cache the domain lists, you can tell onemillion not cache 
 
 The code described above is fine if you are only making one or two calls or if storage space is a concern, but it is suggested that you cache the lists if feasible so as to limit traffic to the domain lists.
 
+**NOTE:** currently, the 'No caching' configuration will throw an error. This will be updated and handled when `issue #12 <https://github.com/fhightower/onemillion/issues/12>`_ is fixed.
+
 Custom Cache Location
 ---------------------
 
@@ -107,7 +109,7 @@ If you have already run onemillion and have the domain lists cached, but do not 
     o.domain_in_million("google.com")  # True
     o.domain_in_million("gaagle.com")  # False
 
-Be aware that, by default, onemillion will check to see if it has already updated the domain lists today before even trying to update them. In other words, onemillion handles updating responsibly and intelligently by default and there are few cases in which this configuration (using ``update=False``) is necessary.
+Be aware that, by default, onemillion will check to see if it has already updated the domain lists today before even trying to update them. In other words, onemillion handles updating responsibly and intelligently by default and there are few cases in which this configuration (using ``update=False``) is necessary. Nevertheless... it's there and you are welcome to use it.
 
 Credits
 =======
