@@ -115,7 +115,7 @@ class OneMillion(object):
             f.write(json.dumps(self.metadata))
 
     def _check_for_updates(self):
-        """Check to see if top one million lists need updated and update if needed."""
+        """Check to see if lists need updated and update if needed."""
         # get the metadata
         self.metadata = self._get_metadata()
         
