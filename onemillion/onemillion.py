@@ -152,7 +152,13 @@ class OneMillion(object):
     def domain_in_million(self, domain):
         """Check if the given domain is in a top on million list."""
         # TODO: parse the registered domain out of the given domain using tldextract
-        if self.update:
+        # if we are caching and updating...
+        if self.cache and self.update:
+            # cache/update the lists
+            self._update_lists()
+        # if we are caching but not updating and this is the first pass...
+        elif self.cache and not self.update and self.first_time:
+            # cache the contents of the lists as this is the first pass
             self._update_lists()
 
         # see if the given domain is in the up-to-date domain lists
