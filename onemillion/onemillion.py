@@ -159,7 +159,7 @@ class OneMillion(object):
                     if row[1] == domain:
                         # if rank is higher (closer to 1) than the current rank
                         if highest_rank is None or row[0] < highest_rank:
-                            highest_rank = row[0]
+                            highest_rank = int(row[0])
 
         # return the highest rank for the given domain
         return highest_rank
