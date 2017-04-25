@@ -64,13 +64,7 @@ class OneMillion(object):
             open(os.path.join(self.cache_location, 'metadata.json'), 'a').close()
             self.first_time = True
 
-        # if instructions given to onemillion are contrary, raise error message
-        if self.update and not self.cache:
-            raise ValueError("It is not possible to update the top one " +
-                             "million domain lists without caching them. " +
-                             "This script will use the most updated version " +
-                             "of the domain lists by default if cache is " +
-                             "set to True.")
+        self.update_lists()
 
     def _get_metadata(self):
         """Read the metadata from the metadata file."""
@@ -120,8 +114,8 @@ class OneMillion(object):
         with open(os.path.join(self.cache_location, 'metadata.json'), 'w') as f:
             f.write(json.dumps(self.metadata))
 
-    def _update_lists(self):
-        """Update the top one million lists."""
+    def _check_for_updates(self):
+        """Check to see if lists need updated and update if needed."""
         # get the metadata
         self.metadata = self._get_metadata()
         
@@ -152,15 +146,6 @@ class OneMillion(object):
     def domain_in_million(self, domain):
         """Check if the given domain is in a top on million list."""
         # TODO: parse the registered domain out of the given domain using tldextract
-        # if we are caching and updating...
-        if self.cache and self.update:
-            # cache/update the lists
-            self._update_lists()
-        # if we are caching but not updating and this is the first pass...
-        elif self.cache and not self.update and self.first_time:
-            # cache the contents of the lists as this is the first pass
-            self._update_lists()
-
         # see if the given domain is in the up-to-date domain lists
         for domain_list in CONFIG['domain_lists']:
             # open the domain list as a CSV
@@ -173,3 +158,21 @@ class OneMillion(object):
 
         # if the domain was not found in the list, return false
         return False
+
+    def update_lists(self):
+        """Update the lists if appropriate."""
+        # if we are caching and updating...
+        if self.cache and self.update:
+            # cache/update the lists
+            self._check_for_updates()
+        # if we are caching but not updating and this is the first pass...
+        elif self.cache and not self.update and self.first_time:
+            # cache the contents of the lists as this is the first pass
+            self._check_for_updates()
+        # if instructions given to onemillion are contrary, raise error message
+        elif self.update and not self.cache:
+            raise ValueError("It is not possible to update the top one " +
+                             "million domain lists without caching them. " +
+                             "This script will use the most updated version " +
+                             "of the domain lists by default if cache is " +
+                             "set to True.")
