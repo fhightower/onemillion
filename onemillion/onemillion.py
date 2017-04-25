@@ -146,18 +146,23 @@ class OneMillion(object):
     def domain_in_million(self, domain):
         """Check if the given domain is in a top on million list."""
         # TODO: parse the registered domain out of the given domain using tldextract
+        # keep track of the highest (nearest to 1) rank for the given domain
+        highest_rank = None
+
         # see if the given domain is in the up-to-date domain lists
         for domain_list in CONFIG['domain_lists']:
             # open the domain list as a CSV
             with open(os.path.join(self.cache_location, domain_list['output_file_path']), 'r') as domain_csv:
                 domain_reader = csv.reader(domain_csv)
                 for row in domain_reader:
-                    # if the domain is in the given list, return true
+                    # if the domain is in the top million list...
                     if row[1] == domain:
-                        return True
+                        # if rank is higher (closer to 1) than the current rank
+                        if row[0] is None or row[0] < highest_rank:
+                            highest_rank = row[0]
 
-        # if the domain was not found in the list, return false
-        return False
+        # return the highest rank for the given domain
+        return highest_rank
 
     def update_lists(self):
         """Update the lists if appropriate."""
