@@ -56,8 +56,8 @@ The default usage of onemillion is as follows:
     from onemillion import onemillion
 
     o = onemillion.OneMillion()
-    o.domain_in_million("google.com")  # True
-    o.domain_in_million("gaagle.com")  # False
+    o.domain_in_million("google.com")  # 1
+    o.domain_in_million("gaagle.com")  # None
 
 Using the method described above, the alexa and cisco top one million domain lists as well as a bit of metadata will be stored in the home directory: ``~/.onemillion``.
 
@@ -72,8 +72,8 @@ If you do not want to cache the domain lists, you can tell onemillion not cache 
 
     # do not cache anything
     o = onemillion.OneMillion(cache=False)
-    o.domain_in_million("google.com")  # True
-    o.domain_in_million("gaagle.com")  # False
+    o.domain_in_million("google.com")  # 1
+    o.domain_in_million("gaagle.com")  # None
 
 The code described above is fine if you are only making one or two calls or if storage space is a concern, but it is suggested that you cache the lists if feasible so as to limit traffic to the domain lists.
 
@@ -90,8 +90,8 @@ If you are caching the lists but want to cache them somewhere other than your ho
 
     # cache data to a specific path
     o = onemillion.OneMillion(cache_location=<YOUR_PATH_HERE>)
-    o.domain_in_million("google.com")  # True
-    o.domain_in_million("gaagle.com")  # False
+    o.domain_in_million("google.com")  # 1
+    o.domain_in_million("gaagle.com")  # None
 
 This will cache the domain lists in the path you provide.
 
@@ -106,8 +106,8 @@ If you have already run onemillion and have the domain lists cached, but do not 
 
     # do not update cached content
     o = onemillion.OneMillion(update=False)
-    o.domain_in_million("google.com")  # True
-    o.domain_in_million("gaagle.com")  # False
+    o.domain_in_million("google.com")  # 1
+    o.domain_in_million("gaagle.com")  # None
 
 Be aware that, by default, onemillion will check to see if it has already updated the domain lists today before even trying to update them. In other words, onemillion handles updating responsibly and intelligently by default and there are few cases in which this configuration (using ``update=False``) is necessary. Nevertheless... it's there and you are welcome to use it.
 
