@@ -51,6 +51,7 @@ class OneMillion(object):
 
     def __init__(self, cache=True, cache_location=DEFAULT_CACHE_LOCATION,
                  update=True):
+        """Initialize onemillion object."""
         self.cache = cache
         self.cache_location = os.path.expanduser(cache_location)
         self.update = update
@@ -118,12 +119,12 @@ class OneMillion(object):
         """Check to see if lists need updated and update if needed."""
         # get the metadata
         self.metadata = self._get_metadata()
-        
+
         # if the metadata is empty, initialize it
         if self.metadata is None:
             self.metadata = dict()
 
-        # if the top domain list was already updated today, skip the update and move on
+        # if top domain list was updated today, skip the update and move on
         if self.metadata.get('last_updated') == str(datetime.date.today()):
             return
 
@@ -145,7 +146,7 @@ class OneMillion(object):
 
     def domain_in_million(self, domain):
         """Check if the given domain is in a top on million list."""
-        # TODO: parse the registered domain out of the given domain using tldextract
+        # TODO: parse the registered domain out of the domain parameter
         # keep track of the highest (nearest to 1) rank for the given domain
         highest_rank = None
 
