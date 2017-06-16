@@ -24,10 +24,9 @@ onemillion
   :target: https://www.quantifiedcode.com/app/project/901a226d41ef48c08696b0c16583149b
   :alt: Code issues
 
-Determine if a domain is in the Alexa or Cisco top one million domain list. This can be used, to some extent, as a whitelist or reputation check for suspicious domains.
+Determine if a domain is in the Alexa or Cisco top one million domain list.
 
-* Documentation: https://onemillion.readthedocs.io.
-
+Documentation is available here: `https://onemillion.readthedocs.io <https://onemillion.readthedocs.io>`_ .
 
 Installation
 ============
@@ -46,8 +45,17 @@ Alternatively, you can install onemillion as follows:
 Usage
 =====
 
-Default Usage
--------------
+When using the default settings, the following steps will be taken when an instance of onemillion is initialized and the ``domain_in_million`` function called:
+
+1. Check to see if the domain lists have been updated today.
+2a. If they have been updated today, look for the given domain in the lists and stop.
+2b. If the lists have not been updated today, make a ``HEAD`` request and check the current etag against the previous etag (stored locally) to see if the lists have been updated.
+3a. If the etags are the same (meaning the lists have not been updated), look for the given domain in the lists and stop.
+3b. If the etags are different (meaning the lists have been updated), make a request for the lists, unzip them, and save them in the default cache location (``~/.onemillion``).
+4. Now that the lists are updated, search for the given domain in the lists.
+
+Default Usage ~ Hello World!
+----------------------------
 
 The default usage of onemillion is as follows:
 
@@ -109,13 +117,12 @@ If you have already run onemillion and have the domain lists cached, but do not 
     o.domain_in_million("google.com")  # 1
     o.domain_in_million("gaagle.com")  # None
 
-Be aware that, by default, onemillion will check to see if it has already updated the domain lists today before even trying to update them. In other words, onemillion handles updating responsibly and intelligently by default and there are few cases in which this configuration (using ``update=False``) is necessary. Nevertheless... it's there and you are welcome to use it.
+Be aware that onemillion will, by default, check to see if it has already updated the domain lists today before making any requests. Thus, onemillion handles updating responsibly and intelligently by default and there are few cases in which this configuration (using ``update=False``) is necessary. Nevertheless... it's there and you are welcome to use it.
 
 Credits
 =======
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+This package was created with Cookiecutter_ and the `fhightower/python-project-template`_.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-
+.. _`fhightower/python-project-template`: https://github.com/fhightower/python-project-template
