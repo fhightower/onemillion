@@ -62,7 +62,7 @@ Ready to contribute? Here's how to set up `onemillion` for local development.
 1. Fork the `onemillion` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/onemillion.git
+    $ $ git clone git@github.com:<your_github_username_here>/onemillion.git
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
@@ -104,11 +104,3 @@ Before you submit a pull request, check that it meets these guidelines:
 3. The pull request should work for Python 2.6, 2.7, 3.3, 3.4 and 3.5, and for PyPy. Check
    https://travis-ci.org/fhightower/onemillion/pull_requests
    and make sure that the tests pass for all supported Python versions.
-
-Tips
-----
-
-To run a subset of tests::
-
-
-    $ python -m unittest tests.test_onemillion
