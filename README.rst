@@ -2,11 +2,6 @@
 onemillion
 ===============================
 
-.. image:: https://api.codacy.com/project/badge/Grade/e47d712af7e24ac493e76392d1613e82
-   :alt: Codacy Badge
-   :target: https://www.codacy.com/app/fhightower/onemillion?utm_source=github.com&utm_medium=referral&utm_content=fhightower/onemillion&utm_campaign=badger
-
-
 .. image:: https://img.shields.io/pypi/v/onemillion.svg
         :target: https://pypi.python.org/pypi/onemillion
 
@@ -15,6 +10,10 @@ onemillion
 
 .. image:: https://codecov.io/gh/fhightower/onemillion/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/fhightower/onemillion
+  
+.. image:: https://api.codacy.com/project/badge/Grade/e47d712af7e24ac493e76392d1613e82
+   :alt: Codacy Badge
+   :target: https://www.codacy.com/app/fhightower/onemillion
 
 .. image:: https://readthedocs.org/projects/onemillion/badge/?version=latest
         :target: https://onemillion.readthedocs.io/en/latest/?badge=latest
@@ -23,10 +22,6 @@ onemillion
 .. image:: https://pyup.io/repos/github/fhightower/onemillion/shield.svg
      :target: https://pyup.io/repos/github/fhightower/onemillion/
      :alt: Updates
-
-.. image:: https://www.quantifiedcode.com/api/v1/project/901a226d41ef48c08696b0c16583149b/badge.svg
-  :target: https://www.quantifiedcode.com/app/project/901a226d41ef48c08696b0c16583149b
-  :alt: Code issues
 
 Determine if a domain is in the Alexa or Cisco top one million domain list.
 
