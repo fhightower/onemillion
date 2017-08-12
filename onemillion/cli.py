@@ -1,39 +1,39 @@
-'''onemillion CLI'''
+# -*- coding: utf-8 -*-
 
-# local import
+"""One Million.
+
+Usage:
+    onemillion <host> [--no-cache | --no-update | (-l <cache> | --cache_location=<cache>)]
+    onemillion (-h | --help)
+    onemillion --version
+
+Options:
+    -h --help     Show this screen.
+    --version     Show version.
+    --no-cache    Don't cache the top million domain lists
+    --no-update   Don't update any cached domain lists
+    -l <cache>, --cache_location=<cache>  Specify a cache location
+"""
+
+from docopt import docopt
+
+from .__init__ import __version__ as VERSION
 from .onemillion import OneMillion
 
 
-def main():
-    '''onemillion CLI main command.'''
-    import argparse
+def main(args=None):
+    """Console script for onemillion"""
+    arguments = docopt(__doc__, version=VERSION)
 
-    parser = argparse.ArgumentParser(
-        prog='onemillion',
-        description='Determine if host in one million domain list')
+    # if there is a cache location, pass it into onemillion
+    if arguments['--cache_location'] is not None:
+        one_million = OneMillion(cache=(not arguments['--no-cache']), update=(not arguments['--no-update']), cache_location=arguments['--cache_location'])
+    else:
+        # if there is no cache location, use the default one and pass in the other values
+        one_million = OneMillion(cache=(not arguments['--no-cache']), update=(not arguments['--no-update']))
 
-    # TODO: enable version
-    # parser.add_argument('--version', action='version', version='%(prog)s ' + __version__)
-    parser.add_argument('domain', nargs=1, help='host')
+    print(one_million.domain_in_million(arguments['<host>']))
 
-    # parser.add_argument('-u', '--update', default=False, action='store_true',
-    #                     help='force fetch the latest TLD definitions')
-    # parser.add_argument('-c', '--cache_file',
-    #                     help='use an alternate TLD definition file')
-    # parser.add_argument('-p', '--private_domains', default=False, action='store_true',
-    #                     help='Include private domains')
 
-    args = parser.parse_args()
-    one_million = OneMillion()
-
-    # if args.cache_file:
-    #     tld_extract.cache_file = args.cache_file
-
-    # if args.update:
-    #     tld_extract.update(True)
-    # elif len(args.input) is 0:
-    #     parser.print_usage()
-    #     exit(1)
-
-    for i in args.input:
-        print(' '.join(tld_extract(i)))  # pylint: disable=superfluous-parens
+if __name__ == "__main__":
+    main()

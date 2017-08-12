@@ -10,13 +10,12 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'Requests'
-    # TODO: put package requirements here
+    'Requests',
+    'docopt>=0.6',
 ]
 
 test_requirements = [
     'Requests'
-    # TODO: put package test requirements here
 ]
 
 setup(
@@ -26,6 +25,11 @@ setup(
     long_description=readme + '\n\n' + history,
     author="Floyd Hightower",
     author_email='',
+    entry_points={
+       'console_scripts': [
+           'onemillion=onemillion.cli:main'
+       ]
+    },
     url='https://github.com/fhightower/onemillion',
     packages=[
         'onemillion',

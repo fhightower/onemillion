@@ -177,8 +177,13 @@ class OneMillion(object):
             self._check_for_updates()
         # if instructions given to onemillion are contrary, raise error message
         elif self.update and not self.cache:
-            raise ValueError("It is not possible to update the top one " +
-                             "million domain lists without caching them. " +
-                             "This script will use the most updated version " +
-                             "of the domain lists by default if cache is " +
-                             "set to True.")
+            # In this instance, I'm going to assume that the user wants to 
+            # search without updating or caching.
+            print("You instructed me to update without caching. As this is " +
+                  "not possible, I will neither cache nor update.")
+            # Previously, I was raising the error below, but this is too much
+            # raise ValueError("It is not possible to update the top one " +
+            #                  "million domain lists without caching them. " +
+            #                  "This script will use the most updated version " +
+            #                  "of the domain lists by default if cache is " +
+            #                  "set to True.")
