@@ -32,7 +32,7 @@ def test_onemillion_object(onemillion_instance):
 
     # test the rank of 'google.com'
     rank = onemillion_instance.domain_in_million('google.com')
-    assert(type(rank) == int)
+    assert(isinstance(rank, int))
     assert(rank <= 5)
 
     # test the rank of 'gaagle.com'
