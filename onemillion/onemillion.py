@@ -95,9 +95,7 @@ class OneMillion(object):
             data = zip_file.read('top-1m.csv')
 
             # write the data into the cache_location
-            with open(os.path.join(self.cache_location,
-                                   domain_list['output_file_path']),
-                      'w+') as f:
+            with open(os.path.join(self.cache_location, domain_list['output_file_path']), 'w+') as f:
                 f.write(data.decode("utf-8"))
 
     def _update_etag(self, domain_list_name, etag):
@@ -147,6 +145,7 @@ class OneMillion(object):
     def domain_in_million(self, domain):
         """Check if the given domain is in a top on million list."""
         # TODO: parse the registered domain out of the domain parameter
+        domain = domain.lower()
         # keep track of the highest (nearest to 1) rank for the given domain
         highest_rank = None
 
@@ -179,8 +178,7 @@ class OneMillion(object):
         elif self.update and not self.cache:
             # In this instance, I'm going to assume that the user wants to 
             # search without updating or caching.
-            print("You instructed me to update without caching. As this is " +
-                  "not possible, I will neither cache nor update.")
+            print("You instructed me to update without caching. As this is not possible, I will neither cache nor update.")
             # Previously, I was raising the error below, but this is too much
             # raise ValueError("It is not possible to update the top one " +
             #                  "million domain lists without caching them. " +
