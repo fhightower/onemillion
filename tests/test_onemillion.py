@@ -10,7 +10,7 @@ Tests for `onemillion` module.
 
 import pytest
 
-from onemillion import onemillion
+import onemillion
 
 
 @pytest.fixture
@@ -19,10 +19,10 @@ def onemillion_instance():
     return onemillion_instance
 
 
-def test_get_current_etag():
+def test_get_current_etag(onemillion_instance):
     """See if we have access to the datasets."""
-    for dataset in onemillion.CONFIG['domain_lists']:
-        etag = onemillion.get_current_etag(dataset['url'])
+    for dataset in onemillion_instance.CONFIG['domain_lists']:
+        etag = onemillion_instance.get_current_etag(dataset['url'])
         assert(etag is not None)
 
 

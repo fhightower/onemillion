@@ -68,7 +68,7 @@ The default usage of onemillion is as follows:
 
 .. code-block:: python
 
-    from onemillion import onemillion
+    import onemillion
 
     o = onemillion.OneMillion()
     o.domain_in_million("google.com")  # 1
@@ -97,7 +97,7 @@ If you do not want to cache the domain lists, you can tell onemillion not cache 
 
 .. code-block:: python
 
-    from onemillion import onemillion
+    import onemillion
 
     # do not cache anything
     o = onemillion.OneMillion(cache=False)
@@ -127,7 +127,7 @@ If you are caching the lists but want to cache them somewhere other than your ho
 
 .. code-block:: python
 
-    from onemillion import onemillion
+    import onemillion
 
     # cache data to a specific path
     o = onemillion.OneMillion(cache_location=<YOUR_PATH_HERE>)
@@ -160,7 +160,7 @@ If you have already run onemillion and have the domain lists cached, but do not 
 
 .. code-block:: python
 
-    from onemillion import onemillion
+    import onemillion
 
     # do not update cached content
     o = onemillion.OneMillion(update=False)

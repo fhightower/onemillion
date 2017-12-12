@@ -14,36 +14,7 @@ import zipfile
 
 import requests
 
-CONFIG = {
-    'domain_lists': [
-        {
-            'name': "alexa",
-            'output_file_path': "alexa.csv",
-            'url': "http://s3.amazonaws.com/alexa-static/top-1m.csv.zip"
-        }, {
-            'name': "cisco umbrella",
-            'output_file_path': "cisco.csv",
-            'url': "http://s3-us-west-1.amazonaws.com/umbrella-static/" +
-                   "top-1m.csv.zip"
-        }
-    ]
-}
 DEFAULT_CACHE_LOCATION = '~/.onemillion'
-
-
-def get_current_etag(domain_list_url):
-    """Get the current etag for a given domain list."""
-    current_etag = None
-
-    try:
-        results = requests.head(domain_list_url)
-    except Exception as e:
-        # TODO: consider adding logging here
-        raise e
-    else:
-        current_etag = results.headers.get('etag')
-
-    return current_etag
 
 
 class OneMillion(object):
@@ -56,6 +27,20 @@ class OneMillion(object):
         self.cache_location = os.path.expanduser(cache_location)
         self.update = update
         self.first_time = False
+        self.CONFIG = {
+            'domain_lists': [
+                {
+                    'name': "alexa",
+                    'output_file_path': "alexa.csv",
+                    'url': "http://s3.amazonaws.com/alexa-static/top-1m.csv.zip"
+                }, {
+                    'name': "cisco umbrella",
+                    'output_file_path': "cisco.csv",
+                    'url': "http://s3-us-west-1.amazonaws.com/umbrella-static/" +
+                           "top-1m.csv.zip"
+                }
+            ]
+        }
 
         # if cache location does not exist, create it and metadata file
         if not os.path.exists(self.cache_location):
@@ -66,6 +51,21 @@ class OneMillion(object):
             self.first_time = True
 
         self.update_lists()
+
+    @staticmethod
+    def get_current_etag(domain_list_url):
+        """Get the current etag for a given domain list."""
+        current_etag = None
+
+        try:
+            results = requests.head(domain_list_url)
+        except Exception as e:
+            # TODO: consider adding logging here
+            raise e
+        else:
+            current_etag = results.headers.get('etag')
+
+        return current_etag
 
     def _get_metadata(self):
         """Read the metadata from the metadata file."""
@@ -127,9 +127,9 @@ class OneMillion(object):
             return
 
         # check each of the lists to see if they need to be updated
-        for domain_list in CONFIG['domain_lists']:
+        for domain_list in self.CONFIG['domain_lists']:
             previous_etag = self.metadata.get(domain_list['name'] + ' etag')
-            current_etag = get_current_etag(domain_list['url'])
+            current_etag = self.get_current_etag(domain_list['url'])
 
             # if the domain list needs to be updated...
             if previous_etag != current_etag:
@@ -150,7 +150,7 @@ class OneMillion(object):
         highest_rank = None
 
         # see if the given domain is in the up-to-date domain lists
-        for domain_list in CONFIG['domain_lists']:
+        for domain_list in self.CONFIG['domain_lists']:
             # open the domain list as a CSV
             with open(os.path.join(self.cache_location, domain_list['output_file_path']), 'r') as domain_csv:
                 domain_reader = csv.reader(domain_csv)

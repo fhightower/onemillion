@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""OneMillion."""
+"""Check if a domain is in a top-million domain list from Alexa or Cisco."""
+
+from .onemillion import OneMillion
 
 __author__ = """Floyd Hightower"""
-__email__ = ''
 __version__ = '0.5.1'
