@@ -25,7 +25,7 @@ onemillion
 
 Determine if a domain is in the Alexa or Cisco top one million domain list.
 
-Documentation is available here: `https://onemillion.readthedocs.io <https://onemillion.readthedocs.io>`_ .
+Documentation is available here: `https://onemillion.readthedocs.io <https://onemillion.readthedocs.io>`_ . There is a UI/API using this package available here: `http://onemillion.hightower.space <http://onemillion.hightower.space/>`_
 
 Installation
 ============
