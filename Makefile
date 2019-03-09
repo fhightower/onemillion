@@ -89,3 +89,7 @@ install: clean ## install the package to the active Python's site-packages
 
 upstream: ## set the upstream for the repository
 	git remote set-upstream https://github.com/fhightower/onemillion.git
+
+upload: clean ## upload the code to pypi
+	python3 setup.py sdist bdist_wheel
+	python3 -m twine upload dist/*
